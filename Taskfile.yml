@@ -5,10 +5,15 @@ tasks:
     cmds:
       - echo 'Hello World from Task!'
     silent: true
-  run:
+  init:
     cmds:
       - rm -rf ./.tinygit
       - go run main.go init
+  hash:
+    cmds:
+      - echo 'test content' | go run main.go hash-object -w --stdin
+  cat-file:
+      - go run main.go cat-file d670460b4b4aece5915caf5c68d12f560a9fe3e4
   clean:
     cmds:
       - rm -rf ./.tinygit
