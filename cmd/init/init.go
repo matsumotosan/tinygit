@@ -19,8 +19,8 @@ var (
 var InitCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize a Tinygit repository.",
-	Long: `Initialize a Tinygit repository.`,
-	Run: initRun,
+	Long:  `Initialize a Tinygit repository.`,
+	Run:   initRun,
 }
 
 func initRun(cmd *cobra.Command, args []string) {
@@ -41,7 +41,7 @@ func initRun(cmd *cobra.Command, args []string) {
 	writeDescription(dir)
 
 	if !quiet {
-		printMessage(filepath.Dir(dir), err)
+		printMessage(dir, err)
 	}
 }
 
@@ -53,7 +53,6 @@ func printMessage(dir string, err error) {
 		msg = "Reinitialized a tinygit repository at"
 	}
 	fmt.Println(msg, dir)
-
 }
 
 func initHooks(dir string) {
