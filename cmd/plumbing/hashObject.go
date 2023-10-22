@@ -4,7 +4,6 @@ import (
 	"io"
 	"os"
 	"fmt"
-	"path/filepath"
 
 	"github.com/spf13/cobra"
 )
@@ -46,15 +45,11 @@ func hashObjectRun(cmd *cobra.Command, args []string) {
 	sha1 := object.Sha1Hash()
 
 	if write {
-		path = sha2path(sha1)
+		path = Sha2path(sha1)
 		object.Save(path)
 	}
 
 	fmt.Println(sha1)
-}
-
-func sha2path(sha1 string) string {
-	return filepath.Join(".tinygit/objects", sha1[:2], sha1[2:])
 }
 
 func init() {
