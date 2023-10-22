@@ -44,16 +44,15 @@ func hashObjectRun(cmd *cobra.Command, args []string) {
 
 	object := NewObject(objectType, content)
 	sha1 := object.Sha1Hash()
-	fmt.Println(sha1)
 
 	if write {
-		path := sha2path(sha1)
+		path = sha2path(sha1)
 		object.Save(path)
 	}
 }
 
 func sha2path(sha1 string) string {
-	return filepath.Join(sha1[:2], sha1[2:])
+	return filepath.Join(".tinygit/objects", sha1[:2], sha1[2:])
 }
 
 func init() {

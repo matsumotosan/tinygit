@@ -3,6 +3,7 @@ package plumbing
 import (
 	"os"
 	"crypto/sha1"
+	"path/filepath"
 	"fmt"
 	"log"
 )
@@ -22,11 +23,14 @@ func NewObject(objectType string, content []byte) Object {
 }
 
 func (o Object) Save(path string) {
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		if err := os.MkdirAll(path, os.ModePerm); err != nil {
+	if _, err := os.Stat(filepath.Dir(path)); os.IsNotExist(err) {
+		if err := os.MkdirAll(filepath.Dir(path), os.ModePerm); err != nil {
 			log.Fatal(err)
 		}
-		fmt.Printf("Create %s", path)
+	}
+
+	if err := os.WriteFile(path, []byte(o.Content), 0666); err != nil {
+		log.Fatal(err)
 	}
 }
 
