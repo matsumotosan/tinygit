@@ -2,8 +2,7 @@ package cmd
 
 import (
 	"os"
-	tinyinit "tinygit/cmd/init"
-	"tinygit/cmd/diff"
+	"tinygit/cmd/porcelain"
 	"tinygit/cmd/plumbing"
 
 	"github.com/spf13/cobra"
@@ -25,11 +24,16 @@ func Execute() {
 func addPlumbing() {
 	rootCmd.AddCommand(plumbing.HashObjectCmd)
 	rootCmd.AddCommand(plumbing.CatFileCmd)
+	rootCmd.AddCommand(plumbing.CommitTreeCmd)
+	rootCmd.AddCommand(plumbing.ReadTreeCmd)
+	rootCmd.AddCommand(plumbing.UpdateIndexCmd)
+	rootCmd.AddCommand(plumbing.WriteTreeCmd)
 }
 
 func addPorcelain() {
-	rootCmd.AddCommand(tinyinit.InitCmd)
-	rootCmd.AddCommand(diff.DiffCmd)
+	rootCmd.AddCommand(porcelain.InitCmd)
+	rootCmd.AddCommand(porcelain.DiffCmd)
+	rootCmd.AddCommand(porcelain.LogCmd)
 }
 
 func init() {
