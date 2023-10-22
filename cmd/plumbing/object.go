@@ -22,13 +22,9 @@ func NewObject(objectType string, content []byte) Object {
 	}
 }
 
-func GetObject(sha1 string) Object {
+func GetObject(sha1 string) (Object, error) {
 	content, err := os.ReadFile(Sha2path(sha1))
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return NewObject("blob", content)
+	return NewObject("blob", content), err
 }
 
 func (o Object) PrettyPrint() {

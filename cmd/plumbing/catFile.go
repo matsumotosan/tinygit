@@ -1,13 +1,14 @@
 package plumbing
 
 import (
+	"os"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
 var (
-	exists bool
+	checkExists bool
 	prettyPrint bool
 	showType bool
 	showSize bool
@@ -22,22 +23,20 @@ var CatFileCmd = &cobra.Command{
 }
 
 func catFileRun(cmd *cobra.Command, args []string) {
-	object := GetObject(args[0])
-	if prettyPrint {
-		object.PrettyPrint()
+	object, err := GetObject(args[0])
+	if checkExists {
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Object %s is invalid.\n", args[0])
+		}
 	}
 
-	if showType {
-		fmt.Println("type")
-	}
-
-	if showSize {
-		fmt.Println("size")
-	}
+	if prettyPrint { object.PrettyPrint() }
+	if showType { fmt.Println(object.Type) }
+	if showSize { fmt.Println(object.Size) }
 }
 
 func init() {
-	CatFileCmd.Flags().BoolVarP(&exists, "exists", "e", false, "check if <object> exists")
+	CatFileCmd.Flags().BoolVarP(&checkExists, "exists", "e", false, "check if <object> exists")
 	CatFileCmd.Flags().BoolVarP(&prettyPrint, "pretty", "p", false, "pretty print <object> content")
 	CatFileCmd.Flags().BoolVarP(&showType, "show-type", "t", false, "show object type")
 	CatFileCmd.Flags().BoolVarP(&showSize, "show", "s", false, "show object size")
