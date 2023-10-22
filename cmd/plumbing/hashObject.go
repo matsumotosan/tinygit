@@ -11,7 +11,7 @@ import (
 
 var (
 	content []byte
-	object_type string
+	objectType string
 	write bool
 	stdin bool
 	stdinPaths bool
@@ -49,6 +49,8 @@ func hashObjectRun(cmd *cobra.Command, args []string) {
 		path = sha2path(sha1)
 		object.Save(path)
 	}
+
+	fmt.Println(sha1)
 }
 
 func sha2path(sha1 string) string {
@@ -56,7 +58,7 @@ func sha2path(sha1 string) string {
 }
 
 func init() {
-	HashObjectCmd.Flags().StringVarP(&object_type, "type", "t", "blob", "type of object to be created")
+	HashObjectCmd.Flags().StringVarP(&objectType, "type", "t", "blob", "type of object to be created")
 	HashObjectCmd.Flags().BoolVarP(&write, "write", "w", true, "write object to object database")
 	HashObjectCmd.Flags().BoolVar(&stdin, "stdin", false, "read object from standard input instead of from a file")
 	HashObjectCmd.Flags().BoolVar(&stdin, "stdin-paths", false, "read file names from standard input")
